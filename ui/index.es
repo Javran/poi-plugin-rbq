@@ -1,4 +1,5 @@
 import { createStructuredSelector } from 'reselect'
+import { join } from 'path-extra'
 import { words } from 'subtender'
 
 import React, { PureComponent } from 'react'
@@ -8,11 +9,17 @@ import {
   ProgressBar,
   OverlayTrigger, Tooltip,
 } from 'react-bootstrap'
-import { recoveryDetailsSelector } from '../selectors'
 
+import { MaterialIcon } from 'views/components/etc/icon'
+
+import { recoveryDetailsSelector } from '../selectors'
 import { PTyp } from '../ptyp'
 
 const rNames = words('fuel ammo steel bauxite bucket')
+
+const matIds = {
+  fuel: 1, ammo: 2, steel: 3, bauxite: 4, bucket: 6,
+}
 
 class RBQMainImpl extends PureComponent {
   static propTypes = {
@@ -22,7 +29,11 @@ class RBQMainImpl extends PureComponent {
   render() {
     const {recoveryDetails} = this.props
     return (
-      <div style={{padding: 10}}>
+      <div style={{padding: 10}} >
+        <link
+          rel="stylesheet"
+          href={join(__dirname, '..', 'assets', 'rbq.css')}
+        />
         <Panel>
           {
             rNames.map(resourceName => {
@@ -30,10 +41,13 @@ class RBQMainImpl extends PureComponent {
               const rowComponent = (
                 <div
                   key={resourceName}
-                  style={{display: 'flex', alignItems: 'center'}}>
-                  <div style={{flex: 1}}>{resourceName}</div>
+                  style={{display: 'flex', alignItems: 'center', marginBottom: 10}}>
+                  <MaterialIcon
+                    materialId={matIds[resourceName]}
+                    className="material-icon"
+                  />
                   <ProgressBar
-                    style={{width: '80%', margin: 10}}
+                    style={{margin: 'auto', marginLeft: 10, flex: 1}}
                     min={0} max={1}
                     now={recovInfo.rate}
                   />
