@@ -1,4 +1,4 @@
-import { Recovery as reactClass } from './ui'
+import { RBQMain as reactClass } from './ui'
 
 export {
   reactClass,
