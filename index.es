@@ -1,12 +1,4 @@
-import React, { Component } from 'react'
-
-class RBQMain extends Component {
-  render() {
-    return (<div>RBQ!</div>)
-  }
-}
-
-const reactClass = RBQMain
+import { Recovery as reactClass } from './ui'
 
 export {
   reactClass,
