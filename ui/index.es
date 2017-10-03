@@ -3,11 +3,12 @@ import { join } from 'path-extra'
 import { words } from 'subtender'
 
 import React, { PureComponent } from 'react'
+import FontAwesome from 'react-fontawesome'
 import { connect } from 'react-redux'
 import {
   Panel,
   ProgressBar,
-  OverlayTrigger, Tooltip,
+  OverlayTrigger, Tooltip, Button,
 } from 'react-bootstrap'
 
 import { MaterialIcon } from 'views/components/etc/icon'
@@ -51,6 +52,12 @@ class RBQMainImpl extends PureComponent {
                     min={0} max={1}
                     now={recovInfo.rate}
                   />
+                  <Button
+                    bsSize="small"
+                    style={{marginLeft: 10}}
+                  >
+                    <FontAwesome name="edit" />
+                  </Button>
                 </div>
               )
 
