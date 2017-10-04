@@ -34,7 +34,7 @@ const actionCreators = {
 const mapDispatchToProps = _.memoize(dispatch =>
   bindActionCreators(actionCreators, dispatch))
 
-const withBoundActionCreator = (func, dispatch=store.dispatch) =>
+const withBoundActionCreators = (func, dispatch=store.dispatch) =>
   func(mapDispatchToProps(dispatch))
 
 export {
@@ -42,5 +42,5 @@ export {
   reducer,
   actionCreators,
   mapDispatchToProps,
-  withBoundActionCreator,
+  withBoundActionCreators,
 }
