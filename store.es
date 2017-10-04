@@ -38,6 +38,7 @@ const withBoundActionCreator = (func, dispatch=store.dispatch) =>
   func(mapDispatchToProps(dispatch))
 
 export {
+  initState,
   reducer,
   actionCreators,
   mapDispatchToProps,
