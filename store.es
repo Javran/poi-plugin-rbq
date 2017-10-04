@@ -1,0 +1,45 @@
+import _ from 'lodash'
+import { bindActionCreators } from 'redux'
+import { mkSimpleReducer } from 'subtender'
+
+import { store } from 'views/create-store'
+
+const initState = {
+  ready: false,
+  resourceRanges: {
+    ..._.fromPairs(['fuel', 'ammo', 'steel', 'bauxite'].map(resourceName =>
+      [resourceName, {min: 0, max: 300000}])
+    ),
+    bucket: {min: 0, max: 3000},
+  },
+}
+
+const reducer = mkSimpleReducer(
+  initState,
+  '@poi-plugin-rbq@Modify',
+  '@poi-plugin-rbq@Ready',
+)
+
+const actionCreators = {
+  ready: newState => ({
+    type: '@poi-plugin-rbq@Ready',
+    newState,
+  }),
+  modify: modifier => ({
+    type: '@poi-plugin-rbq@Modify',
+    modifier,
+  }),
+}
+
+const mapDispatchToProps = _.memoize(dispatch =>
+  bindActionCreators(actionCreators, dispatch))
+
+const withBoundActionCreator = (func, dispatch=store.dispatch) =>
+  func(mapDispatchToProps(dispatch))
+
+export {
+  reducer,
+  actionCreators,
+  mapDispatchToProps,
+  withBoundActionCreator,
+}
