@@ -1,5 +1,18 @@
 import _ from 'lodash'
 import { createSelector } from 'reselect'
+import {
+  extensionSelectorFactory,
+} from 'views/utils/selectors'
+import { initState } from './store'
+
+const extSelector = createSelector(
+  extensionSelectorFactory('poi-plugin-rbq'),
+  ext => _.isEmpty(ext) ? initState : ext)
+
+const readySelector = createSelector(
+  extSelector,
+  ext => ext.ready
+)
 
 const infoSelector = state => state.info
 
@@ -58,6 +71,8 @@ const recoveryDetailsSelector = createSelector(
 )
 
 export {
+  extSelector,
+  readySelector,
   resourceDetailsSelector,
   recoveryDetailsSelector,
 }

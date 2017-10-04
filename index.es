@@ -1,9 +1,10 @@
 import { RBQMain as reactClass } from './ui'
 import { reducer, withBoundActionCreators } from './store'
-
 import { loadPState } from './p-state'
+import { globalSubscribe, globalUnsubscribe } from './observers'
 
-const pluginDidLoad = () =>
+const pluginDidLoad = () => {
+  globalSubscribe()
   setTimeout(() =>
     withBoundActionCreators(bac => {
       const pState = loadPState()
@@ -15,9 +16,9 @@ const pluginDidLoad = () =>
       }
     })
   )
-
-const pluginWillUnload = () => {
 }
+
+const pluginWillUnload = globalUnsubscribe
 
 export {
   reactClass,
