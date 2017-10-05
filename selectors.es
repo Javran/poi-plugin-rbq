@@ -14,6 +14,11 @@ const readySelector = createSelector(
   ext => ext.ready
 )
 
+const resourceRangesSelector = createSelector(
+  extSelector,
+  ext => ext.resourceRanges
+)
+
 const infoSelector = state => state.info
 
 const resourcesSelector = createSelector(
@@ -70,9 +75,35 @@ const recoveryDetailsSelector = createSelector(
   )
 )
 
+const resourceDetailsAltSelector = createSelector(
+  resourceDetailsSelector,
+  resourceRangesSelector,
+  (resourceDetails, resourceRanges) => _.fromPairs(
+    _.toPairs(resourceRanges).map(
+      ([resourceName,{min,max}]) => {
+        const actualAmount = resourceDetails[resourceName]
+        const recovInfo = (actualAmount >= max) ?
+          {
+            rate: 1,
+            neededAmount: null,
+          } : {
+            rate: Math.max(actualAmount-min,0) / Math.max(max-min,0),
+            neededAmount: max - actualAmount,
+          }
+        return [
+          resourceName,
+          {...recovInfo,min,max,now: actualAmount},
+        ]
+      }
+    )
+  )
+)
+
 export {
   extSelector,
   readySelector,
+  resourceRangesSelector,
   resourceDetailsSelector,
   recoveryDetailsSelector,
+  resourceDetailsAltSelector,
 }

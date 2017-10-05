@@ -20,6 +20,7 @@
   },
   "license": "MIT",
   "poiPlugin": {
+    "name": "Resource Bars Quintuple",
     "priority": 600,
     "icon": "eye-slash"
   },
