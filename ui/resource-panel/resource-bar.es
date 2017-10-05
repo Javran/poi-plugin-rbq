@@ -221,8 +221,10 @@ class ResourceBar extends PureComponent {
               placement="bottom"
               key={name}
               overlay={(
-                <Tooltip id={`plugin-chaos-resource-tooltip-${name}`}>
-                  {info.neededAmount}
+                <Tooltip
+                  className="rbq-pop"
+                  id={`plugin-chaos-resource-tooltip-${name}`}>
+                  {`Current: ${info.now}, Needed Amount: ${info.neededAmount}`}
                 </Tooltip>
               )}
             >
