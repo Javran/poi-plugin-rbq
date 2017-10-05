@@ -218,7 +218,7 @@ class ResourceBar extends PureComponent {
         {
           info.neededAmount !== 0 ? (
             <OverlayTrigger
-              placement="bottom"
+              placement="top"
               key={name}
               overlay={(
                 <Tooltip
