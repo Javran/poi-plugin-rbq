@@ -19,54 +19,84 @@ class ResourceBar extends PureComponent {
     info: PTyp.object.isRequired,
   }
 
+  renderViewer = () => {
+    const {info} = this.props
+    return (
+      <ProgressBar
+        label={(
+          <div
+            style={{
+              position: 'absolute',
+              width: '100%',
+              height: '100%',
+              display: 'flex',
+              alignItems: 'center',
+            }}>
+            <div
+              style={{
+                flex: 1,
+                fontSize: '80%',
+              }}>
+              {info.min}
+            </div>
+            <div style={{
+              flex: 1,
+              fontWeight: "bold"}}>
+              {`${info.now} (${(info.rate*100).toFixed(2)}%)`}
+            </div>
+            <div
+              style={{
+                flex: 1,
+                fontSize: '80%',
+              }}>
+              {info.max}
+            </div>
+          </div>
+        )}
+        style={{
+          position: 'relative',
+          margin: 'auto', marginLeft: 10, flex: 1, height: '2em'}}
+        min={0} max={1}
+        now={info.rate}
+      />
+    )
+  }
+
   render() {
     const {info, name} = this.props
-    const rowComponent = (
+    const content = (
       <div
-        style={{display: 'flex', alignItems: 'center', marginBottom: 10}}>
+        style={{display: 'flex', alignItems: 'center', flex: 1}}>
         <MaterialIcon
           materialId={matIds[name]}
           className="material-icon"
         />
-        <ProgressBar
-          label={
-            (
-              <div
-                style={{
-                  position: 'absolute',
-                  width: '100%',
-                  height: '100%',
-                  display: 'flex',
-                  alignItems: 'center',
-                }}>
-                <div
-                  style={{
-                    flex: 1,
-                    fontSize: '80%',
-                  }}>
-                  {info.min}
-                </div>
-                <div style={{
-                  flex: 1,
-                  fontWeight: "bold"}}>
-                  {`${info.now} (${(info.rate*100).toFixed(2)}%)`}
-                </div>
-                <div
-                  style={{
-                    flex: 1,
-                    fontSize: '80%',
-                  }}>
-                  {info.max}
-                </div>
-              </div>
-            )
-          }
-          style={{
-            position: 'relative',
-            margin: 'auto', marginLeft: 10, flex: 1, height: '2em'}}
-          min={0} max={1}
-          now={info.rate}
-        />
+        {this.renderViewer()}
+      </div>
+    )
+
+    return (
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          marginBottom: 10,
+        }}>
+        {
+          info.neededAmount !== 0 ? (
+            <OverlayTrigger
+              placement="bottom"
+              key={name}
+              overlay={(
+                <Tooltip id={`plugin-chaos-resource-tooltip-${name}`}>
+                  {info.neededAmount}
+                </Tooltip>
+              )}
+            >
+              {content}
+            </OverlayTrigger>
+          ) : content
+        }
         <Button
           bsSize="small"
           style={{marginLeft: 10}}
@@ -75,19 +105,6 @@ class ResourceBar extends PureComponent {
         </Button>
       </div>
     )
-    return info.neededAmount !== 0 ? (
-      <OverlayTrigger
-        placement="bottom"
-        key={name}
-        overlay={(
-          <Tooltip id={`plugin-chaos-resource-tooltip-${name}`}>
-            {info.neededAmount}
-          </Tooltip>
-        )}
-      >
-        {rowComponent}
-      </OverlayTrigger>
-    ) : rowComponent
   }
 }
 
