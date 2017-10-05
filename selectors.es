@@ -26,23 +26,7 @@ const resourcesSelector = createSelector(
   info => info.resources
 )
 
-const resourcePlans = {
-  fuel: 290000,
-  ammo: 290000,
-  steel: 290000,
-  bauxite: 290000,
-  bucket: 2950,
-}
-
-const resourceMin = {
-  fuel: 150000,
-  ammo: 150000,
-  steel: 150000,
-  bauxite: 150000,
-  bucket: 2000,
-}
-
-const resourceDetailsSelector = createSelector(
+const indexedResourcesSelector = createSelector(
   resourcesSelector,
   resourcesRaw => {
     const [fuel, ammo, steel, bauxite, _instantBuild, bucket] =
@@ -55,33 +39,13 @@ const resourceDetailsSelector = createSelector(
 
 // min = actual-0.1*planned / 0.9 (for 10%)
 
-const recoveryDetailsSelector = createSelector(
-  resourceDetailsSelector,
-  resourceDetails => _.fromPairs(
-    _.toPairs(resourcePlans).map(
-      ([resourceName, plannedAmount]) => {
-        const actualAmount = resourceDetails[resourceName]
-        const minAmount = resourceMin[resourceName]
-        const recovInfo = (actualAmount >= plannedAmount) ?
-          {
-            rate: 1,
-            neededAmount: null,
-          } : {
-            rate: Math.max(actualAmount-minAmount,0) / Math.max(plannedAmount-minAmount,0),
-            neededAmount: plannedAmount - actualAmount,
-          }
-        return [resourceName, recovInfo]
-      })
-  )
-)
-
-const resourceDetailsAltSelector = createSelector(
-  resourceDetailsSelector,
+const resourceDetailsSelector = createSelector(
+  indexedResourcesSelector,
   resourceRangesSelector,
-  (resourceDetails, resourceRanges) => _.fromPairs(
+  (resources, resourceRanges) => _.fromPairs(
     _.toPairs(resourceRanges).map(
       ([resourceName,{min,max}]) => {
-        const actualAmount = resourceDetails[resourceName]
+        const actualAmount = resources[resourceName]
         const recovInfo = (actualAmount >= max) ?
           {
             rate: 1,
@@ -104,6 +68,4 @@ export {
   readySelector,
   resourceRangesSelector,
   resourceDetailsSelector,
-  recoveryDetailsSelector,
-  resourceDetailsAltSelector,
 }

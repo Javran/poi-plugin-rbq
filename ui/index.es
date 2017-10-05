@@ -13,7 +13,9 @@ import {
 
 import { MaterialIcon } from 'views/components/etc/icon'
 
-import { recoveryDetailsSelector } from '../selectors'
+import {
+  resourceDetailsSelector,
+} from '../selectors'
 import { PTyp } from '../ptyp'
 
 const rNames = words('fuel ammo steel bauxite bucket')
@@ -24,11 +26,11 @@ const matIds = {
 
 class RBQMainImpl extends PureComponent {
   static propTypes = {
-    recoveryDetails: PTyp.object.isRequired,
+    resourceDetails: PTyp.object.isRequired,
   }
 
   render() {
-    const {recoveryDetails} = this.props
+    const {resourceDetails} = this.props
     return (
       <div style={{padding: 10}} >
         <link
@@ -38,7 +40,7 @@ class RBQMainImpl extends PureComponent {
         <Panel>
           {
             rNames.map(resourceName => {
-              const recovInfo = recoveryDetails[resourceName]
+              const recovInfo = resourceDetails[resourceName]
               const rowComponent = (
                 <div
                   key={resourceName}
@@ -48,7 +50,43 @@ class RBQMainImpl extends PureComponent {
                     className="material-icon"
                   />
                   <ProgressBar
-                    style={{margin: 'auto', marginLeft: 10, flex: 1}}
+                    label={
+                      (
+                        <div
+                          style={{
+                            position: 'absolute',
+                            width: '100%',
+                            height: '100%',
+                            display: 'flex',
+                            alignItems: 'center',
+                          }}>
+                          <div
+                            className="range-hint"
+                            style={{
+                              flex: 1,
+                              fontSize: '80%',
+                            }}>
+                            {recovInfo.min}
+                          </div>
+                          <div style={{
+                            flex: 1,
+                            fontWeight: "bold"}}>
+                            {`${recovInfo.now} (${(recovInfo.rate*100).toFixed(2)}%)`}
+                          </div>
+                          <div
+                            className="range-hint"
+                            style={{
+                              flex: 1,
+                              fontSize: '80%',
+                            }}>
+                            {recovInfo.max}
+                          </div>
+                        </div>
+                      )
+                    }
+                    style={{
+                      position: 'relative',
+                      margin: 'auto', marginLeft: 10, flex: 1, height: '2em'}}
                     min={0} max={1}
                     now={recovInfo.rate}
                   />
@@ -61,13 +99,13 @@ class RBQMainImpl extends PureComponent {
                 </div>
               )
 
-              return recovInfo.neededAmount ? (
+              return recovInfo.neededAmount !== 0 ? (
                 <OverlayTrigger
                   placement="bottom"
                   key={resourceName}
                   overlay={(
                     <Tooltip id={`plugin-chaos-resource-tooltip-${resourceName}`}>
-                      {`${recovInfo.neededAmount} (${(recovInfo.rate*100).toFixed(4)}%)`}
+                      {recovInfo.neededAmount}
                     </Tooltip>
                   )}
                 >
@@ -84,7 +122,7 @@ class RBQMainImpl extends PureComponent {
 
 const RBQMain = connect(
   createStructuredSelector({
-    recoveryDetails: recoveryDetailsSelector,
+    resourceDetails: resourceDetailsSelector,
   })
 )(RBQMainImpl)
 
