@@ -3,6 +3,14 @@
     height: 1.5em;
 }
 
+#poi-plugin-rbq .progress .pg-text {
+    color: white;
+}
+
+#poi-plugin-rbq .progress.bg-hack {
+    background-color: #555;
+}
+
 .rbq-pop .tooltip-inner {
     max-width: none;
 }

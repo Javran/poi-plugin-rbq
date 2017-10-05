@@ -80,6 +80,7 @@ class ResourceBar extends PureComponent {
     const {editing} = this.state
     return (
       <ProgressBar
+        className="bg-hack"
         label={(
           <div
             style={{
@@ -90,21 +91,26 @@ class ResourceBar extends PureComponent {
               alignItems: 'center',
             }}>
             <div
+              className="pg-text"
               style={{
-                flex: 1,
-                fontSize: '80%',
+                flex: 2,
+                fontSize: '.9em',
               }}>
               {info.min}
             </div>
-            <div style={{
-              flex: 1,
-              fontWeight: "bold"}}>
+            <div
+              className="pg-text"
+              style={{
+                flex: 3,
+                fontWeight: "bold",
+              }}>
               {`${info.now} (${(info.rate*100).toFixed(2)}%)`}
             </div>
             <div
+              className="pg-text"
               style={{
-                flex: 1,
-                fontSize: '80%',
+                flex: 2,
+                fontSize: '.9em',
               }}>
               {info.max}
             </div>
