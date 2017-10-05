@@ -63,6 +63,18 @@ class ResourceBar extends PureComponent {
     this.setState({editing: false})
   }
 
+  handleAdjustMin = percent => {
+    const {info: {now}} = this.props
+    const {maxText} = this.state
+    const max = Number(maxText)
+    if (!max)
+      return
+    const p = percent/100
+    const min = (now - p*max)/(1-p)
+    const minText = String(Math.floor(min))
+    this.setState({minText})
+  }
+
   renderViewer = () => {
     const {info} = this.props
     const {editing} = this.state
@@ -116,11 +128,13 @@ class ResourceBar extends PureComponent {
 
     const [minVal, maxVal] = [minText,maxText].map(Number)
     const upBound = name === 'bucket' ? 3000 : 300000
+    const maxValid =
+      maxText && _.isInteger(maxVal) &&
+      maxVal >= 0 && maxVal <= upBound
     const valid =
       minText && _.isInteger(minVal) &&
       minVal >= 0 && minVal <= upBound &&
-      maxText && _.isInteger(maxVal) &&
-      maxVal >= 0 && maxVal <= upBound &&
+      maxValid &&
       minVal < maxVal
 
     return (
@@ -135,7 +149,9 @@ class ResourceBar extends PureComponent {
         }}
       >
         <DropdownButton
-          id={`poi-plugin-rbq-calibrate-${name}`}
+          disabled={!maxValid}
+          onSelect={this.handleAdjustMin}
+          id={`poi-plugin-rbq-adjust-min-${name}`}
           title="Adjust Min"
         >
           {
