@@ -21,6 +21,7 @@ class ResourceBar extends PureComponent {
     // fuel, ammo, etc.
     name: PTyp.string.isRequired,
     info: PTyp.object.isRequired,
+    onChangeMinMax: PTyp.func.isRequired,
   }
 
   constructor(props) {
@@ -55,6 +56,11 @@ class ResourceBar extends PureComponent {
   handleChangeValue = which => e => {
     const text = e.target.value
     this.setState(modifyObject(which, () => text))
+  }
+
+  handleSaveEditing = (min,max) => () => {
+    this.props.onChangeMinMax(min,max)
+    this.setState({editing: false})
   }
 
   renderViewer = () => {
@@ -157,6 +163,7 @@ class ResourceBar extends PureComponent {
         />
         <Button
           bsStyle={valid ? 'success' : 'danger'}
+          onClick={valid ? this.handleSaveEditing(minVal,maxVal) : null}
           disabled={!valid}
           style={{marginLeft: 10, width: '3.6em', marginTop: 0}}
         >

@@ -1,8 +1,8 @@
+import _ from 'lodash'
 import { createStructuredSelector } from 'reselect'
-import { words } from 'subtender'
+import { words, modifyObject } from 'subtender'
 
 import React, { PureComponent } from 'react'
-import FontAwesome from 'react-fontawesome'
 import { connect } from 'react-redux'
 import {
   Panel,
@@ -14,13 +14,29 @@ import {
 
 import { PTyp } from '../../ptyp'
 import { ResourceBar } from './resource-bar'
+import { mapDispatchToProps } from '../../store'
 
 const rNames = words('fuel ammo steel bauxite bucket')
 
 class ResourcePanelImpl extends PureComponent {
   static propTypes = {
     resourceDetails: PTyp.object.isRequired,
+    modify: PTyp.func.isRequired,
   }
+
+  handleChangeMinMax = name => (min,max) =>
+    this.props.modify(
+      modifyObject(
+        'resourceRanges',
+        modifyObject(
+          name,
+          _.flow(
+            modifyObject('min', () => min),
+            modifyObject('max', () => max)
+          )
+        )
+      )
+    )
 
   render() {
     const {resourceDetails} = this.props
@@ -32,6 +48,7 @@ class ResourcePanelImpl extends PureComponent {
               key={resourceName}
               name={resourceName}
               info={resourceDetails[resourceName]}
+              onChangeMinMax={this.handleChangeMinMax(resourceName)}
             />
           ))
         }
@@ -43,7 +60,8 @@ class ResourcePanelImpl extends PureComponent {
 const ResourcePanel = connect(
   createStructuredSelector({
     resourceDetails: resourceDetailsSelector,
-  })
+  }),
+  mapDispatchToProps,
 )(ResourcePanelImpl)
 
 export { ResourcePanel }
