@@ -1,3 +1,4 @@
+import _ from 'lodash'
 import React, { PureComponent } from 'react'
 import { modifyObject, not, enumFromTo } from 'subtender'
 import FontAwesome from 'react-fontawesome'
@@ -32,7 +33,24 @@ class ResourceBar extends PureComponent {
   }
 
   handleToggleEdit = () =>
-    this.setState(modifyObject('editing',not))
+    this.setState(
+      _.flow(
+        modifyObject('editing',not),
+        state => {
+          const {editing} = state
+          if (editing) {
+            const {info: {min, max}} = this.props
+            return {
+              ...state,
+              minText: String(min),
+              maxText: String(max),
+            }
+          } else {
+            return state
+          }
+        }
+      )
+    )
 
   handleChangeValue = which => e => {
     const text = e.target.value
@@ -89,6 +107,16 @@ class ResourceBar extends PureComponent {
   renderEditor = () => {
     const {editing, minText, maxText} = this.state
     const {name} = this.props
+
+    const [minVal, maxVal] = [minText,maxText].map(Number)
+    const upBound = name === 'bucket' ? 3000 : 300000
+    const valid =
+      minText && _.isInteger(minVal) &&
+      minVal >= 0 && minVal <= upBound &&
+      maxText && _.isInteger(maxVal) &&
+      maxVal >= 0 && maxVal <= upBound &&
+      minVal < maxVal
+
     return (
       <div
         key="editor"
@@ -102,7 +130,7 @@ class ResourceBar extends PureComponent {
       >
         <DropdownButton
           id={`poi-plugin-rbq-calibrate-${name}`}
-          title="Calibrate"
+          title="Adjust Min"
         >
           {
             enumFromTo(10,90,x => x+10).map(v => (
@@ -124,10 +152,12 @@ class ResourceBar extends PureComponent {
           type="text"
           placeholder="Max"
           onChange={this.handleChangeValue('maxText')}
-          valie={maxText}
+          value={maxText}
           style={{flex: 1}}
         />
         <Button
+          bsStyle={valid ? 'success' : 'danger'}
+          disabled={!valid}
           style={{marginLeft: 10, width: '3.6em', marginTop: 0}}
         >
           <FontAwesome name="save" />
