@@ -1,6 +1,6 @@
 import _ from 'lodash'
 import { createStructuredSelector } from 'reselect'
-import { words, modifyObject } from 'subtender'
+import { modifyObject } from 'subtender'
 
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
@@ -9,14 +9,13 @@ import {
 } from 'react-bootstrap'
 
 import {
+  resourceNames,
   resourceDetailsSelector,
 } from '../../selectors'
 
 import { PTyp } from '../../ptyp'
 import { ResourceBar } from './resource-bar'
 import { mapDispatchToProps } from '../../store'
-
-const rNames = words('fuel ammo steel bauxite bucket')
 
 class ResourcePanelImpl extends PureComponent {
   static propTypes = {
@@ -43,7 +42,7 @@ class ResourcePanelImpl extends PureComponent {
     return (
       <Panel>
         {
-          rNames.map(resourceName => (
+          resourceNames.map(resourceName => (
             <ResourceBar
               key={resourceName}
               name={resourceName}

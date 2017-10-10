@@ -1,9 +1,12 @@
 import _ from 'lodash'
+import { words } from 'subtender'
 import { createSelector } from 'reselect'
 import {
   extensionSelectorFactory,
 } from 'views/utils/selectors'
 import { initState } from './store'
+
+const resourceNames = words('fuel ammo steel bauxite bucket')
 
 const extSelector = createSelector(
   extensionSelectorFactory('poi-plugin-rbq'),
@@ -37,8 +40,6 @@ const indexedResourcesSelector = createSelector(
   }
 )
 
-// min = actual-0.1*planned / 0.9 (for 10%)
-
 const resourceDetailsSelector = createSelector(
   indexedResourcesSelector,
   resourceRangesSelector,
@@ -64,6 +65,7 @@ const resourceDetailsSelector = createSelector(
 )
 
 export {
+  resourceNames,
   extSelector,
   readySelector,
   indexedResourcesSelector,

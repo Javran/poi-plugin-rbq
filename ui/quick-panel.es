@@ -1,5 +1,5 @@
 import _ from 'lodash'
-import { enumFromTo, modifyObject, words } from 'subtender'
+import { enumFromTo, modifyObject } from 'subtender'
 import { createStructuredSelector } from 'reselect'
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
@@ -8,11 +8,9 @@ import {
   DropdownButton, MenuItem,
 } from 'react-bootstrap'
 
-import { indexedResourcesSelector } from '../selectors'
+import { indexedResourcesSelector, resourceNames } from '../selectors'
 import { mapDispatchToProps } from '../store'
 import { PTyp } from '../ptyp'
-
-const rNames = words('fuel ammo steel bauxite bucket')
 
 class QuickPanelImpl extends PureComponent {
   static propTypes = {
@@ -27,7 +25,7 @@ class QuickPanelImpl extends PureComponent {
       modifyObject(
         'resourceRanges',
         // chain the modification of each resource together
-        _.flow(rNames.map(resourceName =>
+        _.flow(resourceNames.map(resourceName =>
           // the modification on current resource
           ranges => {
             const now = resources[resourceName]
