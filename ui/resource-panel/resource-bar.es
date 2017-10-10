@@ -70,7 +70,7 @@ class ResourceBar extends PureComponent {
     if (!max)
       return
     const p = percent/100
-    const min = (now - p*max)/(1-p)
+    const min = Math.max(0,(now - p*max)/(1-p))
     const minText = String(Math.floor(min))
     this.setState({minText})
   }

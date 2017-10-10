@@ -33,7 +33,7 @@ class QuickPanelImpl extends PureComponent {
               const now = resources[resourceName]
               const {max} = range
               const min = (now - p*max)/(1-p)
-              const minInt = Math.floor(min)
+              const minInt = Math.max(0,Math.floor(min))
 
               // apply modification only if it's valid
               return (
