@@ -27,25 +27,26 @@ class QuickPanelImpl extends PureComponent {
         // chain the modification of each resource together
         _.flow(resourceNames.map(resourceName =>
           // the modification on current resource
-          ranges => {
-            const now = resources[resourceName]
-            const {max} = ranges[resourceName]
-            const min = (now - p*max)/(1-p)
-            const minInt = Math.floor(min)
-            // apply modification only if it's valid
-            return (
-              _.isInteger(minInt) &&
-              minInt >= 0 && minInt <= 300000 &&
-              minInt < max ?
-                modifyObject(
-                  resourceName,
+          modifyObject(
+            resourceName,
+            range => {
+              const now = resources[resourceName]
+              const {max} = range
+              const min = (now - p*max)/(1-p)
+              const minInt = Math.floor(min)
+
+              // apply modification only if it's valid
+              return (
+                _.isInteger(minInt) &&
+                minInt >= 0 && minInt <= 300000 &&
+                minInt < max ?
                   modifyObject(
                     'min', () => minInt
-                  )
-                ) :
-                _.identity
-            )(ranges)
-          }
+                  ) :
+                  _.identity
+              )(range)
+            }
+          )
         ))
       )
     )
