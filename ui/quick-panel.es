@@ -1,13 +1,26 @@
 import { enumFromTo } from 'subtender'
+import { createStructuredSelector } from 'reselect'
 import React, { PureComponent } from 'react'
+import { connect } from 'react-redux'
 import {
   Panel,
   DropdownButton, MenuItem,
 } from 'react-bootstrap'
 
-class QuickPanel extends PureComponent {
-  handleAdjustAll = p =>
-    console.log(p)
+import { indexedResourcesSelector } from '../selectors'
+import { mapDispatchToProps } from '../store'
+import { PTyp } from '../ptyp'
+
+class QuickPanelImpl extends PureComponent {
+  static propTypes = {
+    resources: PTyp.object.isRequired,
+    modify: PTyp.func.isRequired,
+  }
+
+  handleAdjustAll = percent => {
+    const {modify, resources} = this.props
+    console.log(modify, resources)
+  }
 
   render() {
     return (
@@ -31,5 +44,10 @@ class QuickPanel extends PureComponent {
     )
   }
 }
+
+const QuickPanel = connect(
+  createStructuredSelector({resources: indexedResourcesSelector}),
+  mapDispatchToProps
+)(QuickPanelImpl)
 
 export { QuickPanel }

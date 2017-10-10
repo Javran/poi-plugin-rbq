@@ -66,6 +66,7 @@ const resourceDetailsSelector = createSelector(
 export {
   extSelector,
   readySelector,
+  indexedResourcesSelector,
   resourceRangesSelector,
   resourceDetailsSelector,
 }
