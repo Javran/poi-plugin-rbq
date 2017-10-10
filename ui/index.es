@@ -5,6 +5,10 @@ import {
   ResourcePanel,
 } from './resource-panel'
 
+import {
+  QuickPanel,
+} from './quick-panel'
+
 const RBQMain = _props => (
   <div style={{padding: 10}} >
     <link
@@ -12,6 +16,7 @@ const RBQMain = _props => (
       href={join(__dirname, '..', 'assets', 'rbq.css')}
     />
     <ResourcePanel />
+    <QuickPanel />
   </div>
 )
 
