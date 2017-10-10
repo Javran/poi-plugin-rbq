@@ -1,6 +1,6 @@
 {
   "name": "poi-plugin-rbq",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Resource Bars Quintuple",
   "main": "index.es",
   "scripts": {
