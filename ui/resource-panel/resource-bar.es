@@ -11,6 +11,7 @@ import {
 
 import { MaterialIcon } from 'views/components/etc/icon'
 import { PTyp } from '../../ptyp'
+import { computeMin } from '../../misc'
 
 const matIds = {
   fuel: 1, ammo: 2, steel: 3, bauxite: 4, bucket: 6,
@@ -70,8 +71,8 @@ class ResourceBar extends PureComponent {
     if (!max)
       return
     const p = percent/100
-    const min = Math.max(0,(now - p*max)/(1-p))
-    const minText = String(Math.floor(min))
+    const minInt = computeMin(now,max,p)
+    const minText = String(minInt)
     this.setState({minText})
   }
 
