@@ -11,7 +11,7 @@ import {
 import { indexedResourcesSelector } from '../selectors'
 import { mapDispatchToProps } from '../store'
 import { PTyp } from '../ptyp'
-import { resourceNames } from '../misc'
+import { resourceNames, computeMin } from '../misc'
 
 class QuickPanelImpl extends PureComponent {
   static propTypes = {
@@ -33,8 +33,7 @@ class QuickPanelImpl extends PureComponent {
             range => {
               const now = resources[resourceName]
               const {max} = range
-              const min = (now - p*max)/(1-p)
-              const minInt = Math.max(0,Math.floor(min))
+              const minInt = computeMin(now,max,p)
 
               // apply modification only if it's valid
               return (

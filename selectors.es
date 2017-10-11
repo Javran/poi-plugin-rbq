@@ -5,7 +5,6 @@ import {
 } from 'views/utils/selectors'
 import { initState } from './store'
 
-
 const extSelector = createSelector(
   extensionSelectorFactory('poi-plugin-rbq'),
   ext => _.isEmpty(ext) ? initState : ext)
@@ -63,7 +62,6 @@ const resourceDetailsSelector = createSelector(
 )
 
 export {
-  resourceNames,
   extSelector,
   readySelector,
   indexedResourcesSelector,
