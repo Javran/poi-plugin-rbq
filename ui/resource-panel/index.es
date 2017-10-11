@@ -9,13 +9,12 @@ import {
 } from 'react-bootstrap'
 
 import {
-  resourceNames,
   resourceDetailsSelector,
 } from '../../selectors'
-
 import { PTyp } from '../../ptyp'
 import { ResourceBar } from './resource-bar'
 import { mapDispatchToProps } from '../../store'
+import { resourceNames } from '../../misc'
 
 class ResourcePanelImpl extends PureComponent {
   static propTypes = {

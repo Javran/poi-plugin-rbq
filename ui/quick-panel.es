@@ -8,9 +8,10 @@ import {
   DropdownButton, MenuItem,
 } from 'react-bootstrap'
 
-import { indexedResourcesSelector, resourceNames } from '../selectors'
+import { indexedResourcesSelector } from '../selectors'
 import { mapDispatchToProps } from '../store'
 import { PTyp } from '../ptyp'
+import { resourceNames } from '../misc'
 
 class QuickPanelImpl extends PureComponent {
   static propTypes = {

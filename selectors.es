@@ -1,12 +1,10 @@
 import _ from 'lodash'
-import { words } from 'subtender'
 import { createSelector } from 'reselect'
 import {
   extensionSelectorFactory,
 } from 'views/utils/selectors'
 import { initState } from './store'
 
-const resourceNames = words('fuel ammo steel bauxite bucket')
 
 const extSelector = createSelector(
   extensionSelectorFactory('poi-plugin-rbq'),
