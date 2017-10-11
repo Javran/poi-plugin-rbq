@@ -12,6 +12,7 @@ import {
 import { MaterialIcon } from 'views/components/etc/icon'
 import { PTyp } from '../../ptyp'
 import { computeMin } from '../../misc'
+import { __ } from '../../tr'
 
 const matIds = {
   fuel: 1, ammo: 2, steel: 3, bauxite: 4, bucket: 6,
@@ -159,7 +160,7 @@ class ResourceBar extends PureComponent {
           disabled={!maxValid}
           onSelect={this.handleAdjustMin}
           id={`poi-plugin-rbq-adjust-min-${name}`}
-          title="Adjust Min"
+          title={__('AdjustMin')}
         >
           {
             enumFromTo(10,90,x => x+10).map(v => (
@@ -171,7 +172,7 @@ class ResourceBar extends PureComponent {
         </DropdownButton>
         <FormControl
           type="text"
-          placeholder="Min"
+          placeholder={__('Min')}
           onChange={this.handleChangeValue('minText')}
           value={minText}
           style={{marginLeft: 10, flex: 1}}
@@ -179,7 +180,7 @@ class ResourceBar extends PureComponent {
         <span style={{margin: '2px 8px'}}>~</span>
         <FormControl
           type="text"
-          placeholder="Max"
+          placeholder={__('Max')}
           onChange={this.handleChangeValue('maxText')}
           value={maxText}
           style={{flex: 1}}
@@ -231,7 +232,7 @@ class ResourceBar extends PureComponent {
                 <Tooltip
                   className="rbq-pop"
                   id={`plugin-chaos-resource-tooltip-${name}`}>
-                  {`Current: ${info.now}, Needed Amount: ${info.neededAmount}`}
+                  {__('BarTooltip',info.now,info.neededAmount)}
                 </Tooltip>
               )}
             >

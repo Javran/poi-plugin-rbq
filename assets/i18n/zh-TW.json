@@ -1,0 +1,11 @@
+{
+  "Plugin" : {
+    "Name": "述資五連",
+    "Desc": "以進度條展示五項資源"
+  },
+  "BarTooltip": "現有: %s, 還需: %s",
+  "AdjustMin": "調節最小值",
+  "AdjustAllMins": "調節所有最小值",
+  "Min": "最小值",
+  "Max": "最大值"
+}

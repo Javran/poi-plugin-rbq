@@ -1,7 +1,7 @@
 {
   "name": "poi-plugin-rbq",
   "version": "0.0.4",
-  "description": "Resource Bars Quintuple",
+  "description": "5 Common resources visualized as progress bars",
   "main": "index.es",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -20,7 +20,8 @@
   },
   "license": "MIT",
   "poiPlugin": {
-    "name": "Resource Bars Quintuple",
+    "name": "Plugin.Name",
+    "description": "Plugin.Desc",
     "priority": 600,
     "icon": "eye-slash"
   },

@@ -1,0 +1,11 @@
+{
+  "Plugin" : {
+    "Name": "Resource Bars Quintuple",
+    "Desc": "5 Common resources visualized as progress bars"
+  },
+  "BarTooltip": "Current: %s, Needed Amount: %s",
+  "AdjustMin": "Adjust Min",
+  "AdjustAllMins": "Adjust All Mins",
+  "Min": "Min",
+  "Max": "Max"
+}

@@ -12,6 +12,7 @@ import { indexedResourcesSelector } from '../selectors'
 import { mapDispatchToProps } from '../store'
 import { PTyp } from '../ptyp'
 import { resourceNames, computeMin } from '../misc'
+import { __ } from '../tr'
 
 class QuickPanelImpl extends PureComponent {
   static propTypes = {
@@ -59,7 +60,7 @@ class QuickPanelImpl extends PureComponent {
           <DropdownButton
             id="poi-plugin-rbq-adjust-all-mins"
             onSelect={this.handleAdjustAll}
-            title="Adjust All Mins"
+            title={__('AdjustAllMins')}
           >
             {
               enumFromTo(10,90,x => x+10).map(v => (
