@@ -56,21 +56,23 @@ class QuickPanelImpl extends PureComponent {
   render() {
     return (
       <Panel>
-        <div>
-          <DropdownButton
-            id="poi-plugin-rbq-adjust-all-mins"
-            onSelect={this.handleAdjustAll}
-            title={__('AdjustAllMins')}
-          >
-            {
-              enumFromTo(10,90,x => x+10).map(v => (
-                <MenuItem key={v} eventKey={v}>
-                  {`${v}%`}
-                </MenuItem>
-              ))
-            }
-          </DropdownButton>
-        </div>
+        <Panel.Body>
+          <div>
+            <DropdownButton
+              id="poi-plugin-rbq-adjust-all-mins"
+              onSelect={this.handleAdjustAll}
+              title={__('AdjustAllMins')}
+            >
+              {
+                enumFromTo(10,90,x => x+10).map(v => (
+                  <MenuItem key={v} eventKey={v}>
+                    {`${v}%`}
+                  </MenuItem>
+                ))
+              }
+            </DropdownButton>
+          </div>
+        </Panel.Body>
       </Panel>
     )
   }

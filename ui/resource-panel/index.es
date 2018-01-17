@@ -40,16 +40,18 @@ class ResourcePanelImpl extends PureComponent {
     const {resourceDetails} = this.props
     return (
       <Panel>
-        {
-          resourceNames.map(resourceName => (
-            <ResourceBar
-              key={resourceName}
-              name={resourceName}
-              info={resourceDetails[resourceName]}
-              onChangeMinMax={this.handleChangeMinMax(resourceName)}
-            />
-          ))
-        }
+        <Panel.Body>
+          {
+            resourceNames.map(resourceName => (
+              <ResourceBar
+                key={resourceName}
+                name={resourceName}
+                info={resourceDetails[resourceName]}
+                onChangeMinMax={this.handleChangeMinMax(resourceName)}
+              />
+            ))
+          }
+        </Panel.Body>
       </Panel>
     )
   }

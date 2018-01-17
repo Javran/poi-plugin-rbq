@@ -23,7 +23,10 @@
     "name": "Plugin.Name",
     "description": "Plugin.Desc",
     "priority": 600,
-    "icon": "eye-slash"
+    "icon": "eye-slash",
+    "apiVer": {
+      "8.1.0-beta.4": "0.1.0"
+    }
   },
   "devDependencies": {
     "babel-core": "^6.25.0",
