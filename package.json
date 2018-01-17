@@ -1,6 +1,6 @@
 {
   "name": "poi-plugin-rbq",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "5 Common resources visualized as progress bars",
   "main": "index.es",
   "scripts": {
