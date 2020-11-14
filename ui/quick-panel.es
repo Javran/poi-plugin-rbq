@@ -39,7 +39,7 @@ class QuickPanelImpl extends PureComponent {
               // apply modification only if it's valid
               return (
                 _.isInteger(minInt) &&
-                minInt >= 0 && minInt <= 300000 &&
+                minInt >= 0 && minInt <= 350000 &&
                 minInt < max ?
                   modifyObject(
                     'min', () => minInt

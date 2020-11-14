@@ -8,7 +8,7 @@ const initState = {
   ready: false,
   resourceRanges: {
     ..._.fromPairs(['fuel', 'ammo', 'steel', 'bauxite'].map(resourceName =>
-      [resourceName, {min: 0, max: 300000}])
+      [resourceName, {min: 0, max: 350000}])
     ),
     bucket: {min: 0, max: 3000},
   },

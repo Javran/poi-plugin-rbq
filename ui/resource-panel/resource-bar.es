@@ -135,7 +135,7 @@ class ResourceBar extends PureComponent {
     const {name} = this.props
 
     const [minVal, maxVal] = [minText,maxText].map(Number)
-    const upBound = name === 'bucket' ? 3000 : 300000
+    const upBound = name === 'bucket' ? 3000 : 350000
     const maxValid =
       maxText && _.isInteger(maxVal) &&
       maxVal >= 0 && maxVal <= upBound
