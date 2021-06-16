@@ -5,8 +5,14 @@ import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import {
   Panel,
-  DropdownButton, MenuItem,
 } from 'react-bootstrap'
+import {
+  Button,
+  Menu,
+  MenuItem,
+  Position,
+} from '@blueprintjs/core'
+import { Popover } from 'views/components/etc/overlay'
 
 import { indexedResourcesSelector } from '../selectors'
 import { mapDispatchToProps } from '../store'
@@ -20,7 +26,7 @@ class QuickPanelImpl extends PureComponent {
     modify: PTyp.func.isRequired,
   }
 
-  handleAdjustAll = percent => {
+  handleAdjustAll = percent => () => {
     const p = percent/100
     const {modify, resources} = this.props
     modify(
@@ -54,23 +60,33 @@ class QuickPanelImpl extends PureComponent {
   }
 
   render() {
+    const menuContent = (
+      <Menu>
+        {
+          enumFromTo(10,90,x => x+10).map(v => (
+            <MenuItem
+              key={v}
+              eventKey={v}
+              text={`${v}%`}
+              onClick={this.handleAdjustAll(v)}
+            />
+          ))
+        }
+      </Menu>
+    )
+
     return (
       <Panel>
         <Panel.Body>
           <div>
-            <DropdownButton
-              id="poi-plugin-rbq-adjust-all-mins"
-              onSelect={this.handleAdjustAll}
-              title={__('AdjustAllMins')}
+            <Popover
+              content={menuContent}
+              position={Position.BOTTOM}
             >
-              {
-                enumFromTo(10,90,x => x+10).map(v => (
-                  <MenuItem key={v} eventKey={v}>
-                    {`${v}%`}
-                  </MenuItem>
-                ))
-              }
-            </DropdownButton>
+              <Button>
+                {__('AdjustAllMins')}
+              </Button>
+            </Popover>
           </div>
         </Panel.Body>
       </Panel>

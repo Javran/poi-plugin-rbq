@@ -12,7 +12,6 @@ import {
   Menu,
   MenuItem,
   Position,
-  ButtonGroup,
 } from '@blueprintjs/core'
 import { Popover } from 'views/components/etc/overlay'
 
