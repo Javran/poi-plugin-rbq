@@ -4,10 +4,17 @@ import { modifyObject, not, enumFromTo } from 'subtender'
 import FontAwesome from 'react-fontawesome'
 import {
   ProgressBar,
-  OverlayTrigger, Tooltip, Button,
-  DropdownButton, MenuItem,
+  OverlayTrigger, Tooltip,
   FormControl,
 } from 'react-bootstrap'
+import {
+  Button,
+  Menu,
+  MenuItem,
+  Position,
+  ButtonGroup,
+} from '@blueprintjs/core'
+import { Popover } from 'views/components/etc/overlay'
 
 import { MaterialIcon } from 'views/components/etc/icon'
 import { PTyp } from '../../ptyp'
@@ -65,7 +72,7 @@ class ResourceBar extends PureComponent {
     this.setState({editing: false})
   }
 
-  handleAdjustMin = percent => {
+  handleAdjustMin = percent => () => {
     const {info: {now}} = this.props
     const {maxText} = this.state
     const max = Number(maxText)
@@ -145,6 +152,20 @@ class ResourceBar extends PureComponent {
       maxValid &&
       minVal < maxVal
 
+    const menuContent = (
+      <Menu>
+        {
+          enumFromTo(10,90,x => x+10).map(v => (
+            <MenuItem
+              key={v}
+              text={`${v}%`}
+              onClick={this.handleAdjustMin(v)}
+            />
+          ))
+        }
+      </Menu>
+    )
+
     return (
       <div
         key="editor"
@@ -156,20 +177,16 @@ class ResourceBar extends PureComponent {
           ...(editing ? {} : {display: 'none'}),
         }}
       >
-        <DropdownButton
-          disabled={!maxValid}
-          onSelect={this.handleAdjustMin}
-          id={`poi-plugin-rbq-adjust-min-${name}`}
-          title={__('AdjustMin')}
+        <Popover
+          content={menuContent}
+          position={Position.BOTTOM}
         >
-          {
-            enumFromTo(10,90,x => x+10).map(v => (
-              <MenuItem key={v} eventKey={v}>
-                {`${v}%`}
-              </MenuItem>
-            ))
-          }
-        </DropdownButton>
+          <Button
+            disabled={!maxValid}
+          >
+            {__('AdjustMin')}
+          </Button>
+        </Popover>
         <FormControl
           type="text"
           placeholder={__('Min')}
