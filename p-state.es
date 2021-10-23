@@ -1,8 +1,10 @@
 import { ensureDirSync, readJsonSync, writeJsonSync } from 'fs-extra'
 import { join } from 'path-extra'
 
+const latestVersion = '0.2.0'
+
 const stateToPState = ({resourceRanges}) => ({
-  $dataVersion: 'initial',
+  $dataVersion: latestVersion,
   resourceRanges,
 })
 
@@ -23,8 +25,18 @@ const savePState = pState => {
 }
 
 const updatePState = oldPState => {
-  if (oldPState.$dataVersion === 'initial')
-    return oldPState
+  const currentPState = {...oldPState}
+
+  if (currentPState.$dataVersion === 'initial') {
+    currentPState.resourceRanges.instantBuild = {min: 0, max: 3000}
+    currentPState.resourceRanges.devMat = {min: 0, max: 3000}
+    currentPState.$dataVersion = '0.2.0'
+  }
+
+  if (currentPState.$dataVersion === latestVersion) {
+    return currentPState
+  }
+
   throw new Error('failed to update the config')
 }
 

@@ -1,6 +1,6 @@
 import { words } from 'subtender'
 
-const resourceNames = words('fuel ammo steel bauxite bucket')
+const resourceNames = words('fuel ammo steel bauxite bucket devMat instantBuild')
 
 /*
    given now, max, p (p /= 1), computes a non-negative integer min

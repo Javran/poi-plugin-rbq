@@ -9,7 +9,8 @@ const pluginDidLoad = () => {
     withBoundActionCreators(bac => {
       const pState = loadPState()
       if (pState !== null) {
-        const {resourceRanges} = pState
+        const curState = {...pState}
+        const {resourceRanges} = curState
         bac.ready({resourceRanges})
       } else {
         bac.ready(undefined)

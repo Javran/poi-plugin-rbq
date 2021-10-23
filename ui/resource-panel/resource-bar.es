@@ -21,7 +21,13 @@ import { computeMin } from '../../misc'
 import { __ } from '../../tr'
 
 const matIds = {
-  fuel: 1, ammo: 2, steel: 3, bauxite: 4, bucket: 6,
+  fuel: 1,
+  ammo: 2,
+  steel: 3,
+  bauxite: 4,
+  instantBuild: 5,
+  bucket: 6,
+  devMat: 7,
 }
 
 class ResourceBar extends PureComponent {
@@ -84,7 +90,7 @@ class ResourceBar extends PureComponent {
   }
 
   renderViewer = () => {
-    const {info} = this.props
+    let {info} = this.props
     const {editing} = this.state
     return (
       <ProgressBar
@@ -141,7 +147,7 @@ class ResourceBar extends PureComponent {
     const {name} = this.props
 
     const [minVal, maxVal] = [minText,maxText].map(Number)
-    const upBound = name === 'bucket' ? 3000 : 350000
+    const upBound = ['bucket', 'devMat', 'instantBuild'].indexOf(name) !== -1 ? 3000 : 350000
     const maxValid =
       maxText && _.isInteger(maxVal) &&
       maxVal >= 0 && maxVal <= upBound

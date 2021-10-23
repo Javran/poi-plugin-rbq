@@ -29,10 +29,11 @@ const resourcesSelector = createSelector(
 const indexedResourcesSelector = createSelector(
   resourcesSelector,
   resourcesRaw => {
-    const [fuel, ammo, steel, bauxite, _instantBuild, bucket] =
+    const [fuel, ammo, steel, bauxite, instantBuild, bucket, devMat] =
       resourcesRaw
     return {
-      fuel, ammo, steel, bauxite, bucket,
+      fuel, ammo, steel, bauxite,
+      bucket, devMat, instantBuild,
     }
   }
 )
