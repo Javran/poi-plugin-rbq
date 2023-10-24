@@ -20,6 +20,16 @@ import { PTyp } from '../ptyp'
 import { resourceNames, computeMin } from '../misc'
 import { __ } from '../tr'
 
+const maxResourceOf = rscName => {
+  if (['bucket', 'devMat', 'instantBuild'].includes(rscName)) {
+    return 350000
+  }
+  if (!['fuel', 'ammo', 'steel', 'bauxite'].includes(rscName)) {
+    console.warn(`unrecognized resource: ${rscName}`)
+  }
+  return 3000
+}
+
 class QuickPanelImpl extends PureComponent {
   static propTypes = {
     resources: PTyp.object.isRequired,
@@ -41,11 +51,11 @@ class QuickPanelImpl extends PureComponent {
               const now = resources[resourceName]
               const {max} = range
               const minInt = computeMin(now,max,p)
-
+              const maxRsc = maxResourceOf(resourceName)
               // apply modification only if it's valid
               return (
                 _.isInteger(minInt) &&
-                minInt >= 0 && minInt <= 350000 &&
+                minInt >= 0 && minInt <= maxRsc &&
                 minInt < max ?
                   modifyObject(
                     'min', () => minInt
