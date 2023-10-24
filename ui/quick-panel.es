@@ -14,21 +14,40 @@ import {
 } from '@blueprintjs/core'
 import { Popover } from 'views/components/etc/overlay'
 
-import { indexedResourcesSelector } from '../selectors'
+import {
+  indexedResourcesSelector,
+  isDevUserSelector,
+} from '../selectors'
 import { mapDispatchToProps } from '../store'
 import { PTyp } from '../ptyp'
 import { resourceNames, computeMin, resourceUpperBoundOf } from '../misc'
 import { __ } from '../tr'
 
+/*
+  TODO: what should be considered as minimum of "done stockpiling" state.
+  note that this is for now a DevUser only feature, until we
+  have some ways to implement this on UI.
+ */
+const computeHardCapMin = rscName => {
+  if (['fuel', 'ammo', 'steel', 'bauxite'].includes(rscName)) {
+    return 345000
+  }
+  if (!['bucket', 'devMat', 'instantBuild'].includes(rscName)) {
+    console.warn(`unrecognized resource: ${rscName}`)
+  }
+  return 2900
+}
+
 class QuickPanelImpl extends PureComponent {
   static propTypes = {
     resources: PTyp.object.isRequired,
+    isDevUser: PTyp.bool.isRequired,
     modify: PTyp.func.isRequired,
   }
 
   handleAdjustAll = percent => () => {
     const p = percent/100
-    const {modify, resources} = this.props
+    const {modify, resources, isDevUser} = this.props
     modify(
       modifyObject(
         'resourceRanges',
@@ -40,15 +59,16 @@ class QuickPanelImpl extends PureComponent {
             range => {
               const now = resources[resourceName]
               const {max} = range
-              const minInt = computeMin(now,max,p)
+              const minInt = computeMin(now, max, p)
               const maxRsc = resourceUpperBoundOf(resourceName)
+              const hardCapMin = computeHardCapMin(resourceName)
               // apply modification only if it's valid
               return (
                 _.isInteger(minInt) &&
                 minInt >= 0 && minInt <= maxRsc &&
                 minInt < max ?
                   modifyObject(
-                    'min', () => minInt
+                    'min', () => isDevUser ? _.min([minInt, hardCapMin]) : minInt
                   ) :
                   _.identity
               )(range)
@@ -95,7 +115,10 @@ class QuickPanelImpl extends PureComponent {
 }
 
 const QuickPanel = connect(
-  createStructuredSelector({resources: indexedResourcesSelector}),
+  createStructuredSelector({
+    resources: indexedResourcesSelector,
+    isDevUser: isDevUserSelector,
+  }),
   mapDispatchToProps
 )(QuickPanelImpl)
 

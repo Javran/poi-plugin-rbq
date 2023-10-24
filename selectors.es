@@ -2,6 +2,7 @@ import _ from 'lodash'
 import { createSelector } from 'reselect'
 import {
   extensionSelectorFactory,
+  configSelector,
 } from 'views/utils/selectors'
 import { initState } from './store'
 
@@ -62,10 +63,16 @@ const resourceDetailsSelector = createSelector(
   )
 )
 
+const isDevUserSelector = createSelector(
+  configSelector,
+  cfg => _.get(cfg, ['javran'], false)
+)
+
 export {
   extSelector,
   readySelector,
   indexedResourcesSelector,
   resourceRangesSelector,
   resourceDetailsSelector,
+  isDevUserSelector,
 }
