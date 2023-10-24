@@ -17,7 +17,7 @@ import { Popover } from 'views/components/etc/overlay'
 
 import { MaterialIcon } from 'views/components/etc/icon'
 import { PTyp } from '../../ptyp'
-import { computeMin } from '../../misc'
+import { computeMin, resourceUpperBoundOf } from '../../misc'
 import { __ } from '../../tr'
 
 const matIds = {
@@ -147,7 +147,7 @@ class ResourceBar extends PureComponent {
     const {name} = this.props
 
     const [minVal, maxVal] = [minText,maxText].map(Number)
-    const upBound = ['bucket', 'devMat', 'instantBuild'].indexOf(name) !== -1 ? 3000 : 350000
+    const upBound = resourceUpperBoundOf(name)
     const maxValid =
       maxText && _.isInteger(maxVal) &&
       maxVal >= 0 && maxVal <= upBound

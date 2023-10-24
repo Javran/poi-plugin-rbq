@@ -4,17 +4,17 @@ import { mkSimpleReducer } from 'subtender'
 
 import { store } from 'views/create-store'
 
-const itemRange = {min: 0, max: 3000}
+import { resourceUpperBoundOf } from './misc'
 
 const initState = {
   ready: false,
   resourceRanges: {
-    ..._.fromPairs(['fuel', 'ammo', 'steel', 'bauxite'].map(resourceName =>
-      [resourceName, {min: 0, max: 350000}])
+    ..._.fromPairs([
+      'fuel', 'ammo', 'steel', 'bauxite',
+      'bucket', 'devMat', 'instantBuild',
+    ].map(resourceName =>
+      [resourceName, {min: 0, max: resourceUpperBoundOf(resourceName)}])
     ),
-    bucket: itemRange,
-    devMat: itemRange,
-    instantBuild: itemRange,
   },
 }
 
