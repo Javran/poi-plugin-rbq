@@ -30,7 +30,7 @@ import { __ } from '../tr'
  */
 const computeHardCapMin = rscName => {
   if (['fuel', 'ammo', 'steel', 'bauxite'].includes(rscName)) {
-    return 345000
+    return 340000
   }
   if (!['bucket', 'devMat', 'instantBuild'].includes(rscName)) {
     console.warn(`unrecognized resource: ${rscName}`)
